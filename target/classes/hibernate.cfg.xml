@@ -10,7 +10,7 @@
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/restapiapp</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">228228</property>
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
 
         <mapping class="com.ilya.restapiapp.model.File"/>
         <mapping class="com.ilya.restapiapp.model.User"/>

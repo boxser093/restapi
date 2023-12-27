@@ -11,16 +11,16 @@ import java.util.List;
 
 public class HibFileRepImpl implements FileRepository {
 
-    private final Logger logger = LoggerFactory.getLogger(HibFileRepImpl.class);
+//    private final Logger logger = LoggerFactory.getLogger(HibFileRepImpl.class);
 
     @Override
     public File getById(Integer idInt) {
         try (Session session = HibernateStatementFactory.getSession()) {
-            logger.info("### Hibernate File Repository ### Get By Id - successful");
+//            logger.info("### Hibernate File Repository ### Get By Id - successful");
             return session.createQuery("FROM File f where f.id =: id ", File.class)
                     .setParameter("id", idInt).getSingleResult();
         } catch (HibernateError error) {
-            logger.debug("%%% Hibernate error %%% Get By Id");
+//            logger.debug("%%% Hibernate error %%% Get By Id");
             throw new HibernateError(error.getMessage());
         }
 
@@ -29,10 +29,10 @@ public class HibFileRepImpl implements FileRepository {
     @Override
     public List<File> getAll() {
         try (Session session = HibernateStatementFactory.getSession()) {
-            logger.info("### Hibernate File Repository ### get All - successful");
+//            logger.info("### Hibernate File Repository ### get All - successful");
             return session.createQuery("FROM File f", File.class).list();
         } catch (HibernateError error) {
-            logger.debug("%%% Hibernate error %%% get All");
+//            logger.debug("%%% Hibernate error %%% get All");
             throw new HibernateError(error.getMessage());
         }
 
@@ -44,10 +44,10 @@ public class HibFileRepImpl implements FileRepository {
             session.beginTransaction();
             session.remove(getById(idInt));
             session.getTransaction().commit();
-            logger.info("### Hibernate File Repository ### deleted - successful");
+//            logger.info("### Hibernate File Repository ### deleted - successful");
             return true;
         } catch (HibernateError error) {
-            logger.debug("%%% Hibernate error %%% deleted - not successful");
+//            logger.debug("%%% Hibernate error %%% deleted - not successful");
             throw new HibernateError(error.getMessage());
         }
     }
@@ -58,10 +58,10 @@ public class HibFileRepImpl implements FileRepository {
             session.beginTransaction();
             Integer id = (Integer) session.save(file);
             session.getTransaction().commit();
-            logger.info("### Hibernate File Repository ### save - successful");
+//            logger.info("### Hibernate File Repository ### save - successful");
             return getById(id);
         } catch (HibernateError e) {
-            logger.debug("%%% Hibernate error %%% save - not successful");
+//            logger.debug("%%% Hibernate error %%% save - not successful");
             throw new HibernateError(e.getMessage());
         }
 
@@ -73,10 +73,10 @@ public class HibFileRepImpl implements FileRepository {
             session.beginTransaction();
             session.update(file);
             session.getTransaction().commit();
-            logger.info("### Hibernate File Repository ### update - successful");
+//            logger.info("### Hibernate File Repository ### update - successful");
             return getById(file.getId());
         } catch (HibernateError e) {
-            logger.debug("%%% Hibernate error %%% update - not successful");
+//            logger.debug("%%% Hibernate error %%% update - not successful");
             throw new HibernateError(e.getMessage());
         }
 

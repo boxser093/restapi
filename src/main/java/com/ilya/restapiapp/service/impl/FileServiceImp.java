@@ -1,32 +1,23 @@
 package com.ilya.restapiapp.service.impl;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.ilya.restapiapp.model.File;
 import com.ilya.restapiapp.repository.FileRepository;
 import com.ilya.restapiapp.repository.impl.HibFileRepImpl;
 import com.ilya.restapiapp.service.FileService;
 import lombok.*;
-import org.apache.commons.fileupload.*;
+import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedReader;
-import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 
 
 public class FileServiceImp implements FileService {
-    private final Logger logger = LoggerFactory.getLogger(FileServiceImp.class);
-
-    private String loggerMessage;
 
     public FileServiceImp() {
         this.fileFepository = new HibFileRepImpl();
-        this.gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
     }
 
     @Getter
@@ -34,7 +25,6 @@ public class FileServiceImp implements FileService {
     @Getter
     private int memMaxSize = 1024 * 1000;
     private FileRepository fileFepository;
-    private Gson gson;
 
     @Getter
     private final String filePath = "E:/Ilya/IDEAProject/restapi/src/main/resources/uploads/";
@@ -59,6 +49,7 @@ public class FileServiceImp implements FileService {
 
     @Override
     public File create(File file) {
+        file.setFilePath(filePath);
         File save = fileFepository.save(file);
         return save;
     }
@@ -68,7 +59,6 @@ public class FileServiceImp implements FileService {
         file = fileFepository.update(file);
         return file;
     }
-
 
     public String downLoadFile(HttpServletRequest req) {
         java.io.File file;
@@ -81,7 +71,6 @@ public class FileServiceImp implements FileService {
         try {
             List fileItems = upload.parseRequest(req);
             Iterator iterator = fileItems.iterator();
-            logger.info("--- ## Start file upload process ## --- ");
             while (iterator.hasNext()) {
                 FileItem fileItem = (FileItem) iterator.next();
                 if (!fileItem.isFormField()) {
@@ -97,27 +86,10 @@ public class FileServiceImp implements FileService {
                     fileItem.write(file);
                 }
             }
-            logger.info("--- ## End file upload process ## --- ");
         } catch (Exception e) {
             e.printStackTrace();
         }
-        logger.info("--- ### File name upload ### ---");
         return fileName;
     }
-    public String toGson(File file) {
-        return gson.toJson(file);
-    }
-    public File fromJson(String bodyRequest) {
-        return gson.fromJson(bodyRequest, File.class);
-    }
-    public String getBody(HttpServletRequest req) throws IOException {
-        BufferedReader br = req.getReader();
-        String str, result = "";
-        while ((str = br.readLine()) != null) {
-            result += str;
-        }
-        return result;
-    }
-
 
 }

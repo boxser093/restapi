@@ -11,16 +11,16 @@ import java.util.List;
 
 
 public class HibEventRepImpl implements EventRepository {
-    private final Logger logger = LoggerFactory.getLogger(HibEventRepImpl.class);
+//    private final Logger logger = LoggerFactory.getLogger(HibEventRepImpl.class);
 
     @Override
     public Event getById(Integer idInt) {
         try (Session session = HibernateStatementFactory.getSession()) {
-            logger.info("### Hibernate Event Repository ### Get By Id () - successful");
+//            logger.info("### Hibernate Event Repository ### Get By Id () - successful");
         Event event = session.get(Event.class, idInt);
         return event;
         } catch (HibernateError e) {
-            logger.info("### Hibernate Event Repository ### Get By Id () - not successful");
+//            logger.info("### Hibernate Event Repository ### Get By Id () - not successful");
             throw new HibernateError(e.getMessage());
         }
     }
@@ -28,10 +28,10 @@ public class HibEventRepImpl implements EventRepository {
     @Override
     public List<Event> getAll() {
         try (Session session = HibernateStatementFactory.getSession()) {
-            logger.info("### Hibernate Event Repository ### Get All () - successful");
+//            logger.info("### Hibernate Event Repository ### Get All () - successful");
             return session.createQuery("FROM Event p",Event.class).list();
         } catch (HibernateError e) {
-            logger.info("### Hibernate Event Repository ### Get All () - not successful");
+//            logger.info("### Hibernate Event Repository ### Get All () - not successful");
             throw new HibernateError(e.getMessage());
         }
     }
@@ -42,10 +42,10 @@ public class HibEventRepImpl implements EventRepository {
             session.beginTransaction();
             session.remove(getById(idInt));
             session.getTransaction().commit();
-            logger.info("### Hibernate Event Repository ### deleted by id () - successful");
+//            logger.info("### Hibernate Event Repository ### deleted by id () - successful");
             return true;
         } catch (HibernateError e) {
-            logger.info("### Hibernate Event Repository ### deleted by id () - not successful");
+//            logger.info("### Hibernate Event Repository ### deleted by id () - not successful");
             throw new HibernateError(e.getMessage());
         }
     }
@@ -56,10 +56,10 @@ public class HibEventRepImpl implements EventRepository {
             session.beginTransaction();
             session.update(event);
             session.getTransaction().commit();
-            logger.info("### Hibernate Event Repository ### update by id () - successful");
+//            logger.info("### Hibernate Event Repository ### update by id () - successful");
             return getById(event.getId());
         } catch (HibernateError e) {
-            logger.info("### Hibernate Event Repository ### update by id () - not successful");
+//            logger.info("### Hibernate Event Repository ### update by id () - not successful");
             throw new HibernateError(e.getMessage());
         }
     }
@@ -72,12 +72,12 @@ public class HibEventRepImpl implements EventRepository {
             session.beginTransaction();
             Integer id = (Integer) session.save(event);
             session.getTransaction().commit();
-            logger.info("### Hibernate Event Repository ### create () - successful");
+//            logger.info("### Hibernate Event Repository ### create () - successful");
             session.close();
             eventSave = getById(id);
             return eventSave;
         } catch (HibernateError e) {
-            logger.info("### Hibernate Event Repository ### update by id () - not successful");
+//            logger.info("### Hibernate Event Repository ### update by id () - not successful");
             throw new HibernateError(e.getMessage());
         }
     }

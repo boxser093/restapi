@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class UserServiceImp implements UserService {
-    private final Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
+//    private final Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
     @Getter
     private HibUserRepImpl userRepository;
     private String loggMessage;
@@ -38,8 +38,8 @@ public class UserServiceImp implements UserService {
     @Override
     public User create(User user) {
         User save = userRepository.save(user);
-        loggMessage = String.format("## User Service ## get By id(%s), name(%s)", save.getId(), save.getName());
-        logger.info(loggMessage);
+//        loggMessage = String.format("## User Service ## get By id(%s), name(%s)", save.getId(), save.getName());
+//        logger.info(loggMessage);
         return save;
     }
 
@@ -47,17 +47,17 @@ public class UserServiceImp implements UserService {
     @Override
     public boolean deleteById(Integer id) {
         boolean result = userRepository.deleteById(id);
-        loggMessage = "## User Service ## delete User: " + result;
-        logger.info(loggMessage);
+//        loggMessage = "## User Service ## delete User: " + result;
+//        logger.info(loggMessage);
         return result;
     }
 
     @Override
     public User update(User user) {
         user = userRepository.update(user);
-        loggMessage = String.format("## User Service ## update User: id(%s),old name(%s), new name(%s)",
-                user.getId(), user.getName(), user.getName());
-        logger.info(loggMessage);
+//        loggMessage = String.format("## User Service ## update User: id(%s),old name(%s), new name(%s)",
+//                user.getId(), user.getName(), user.getName());
+//        logger.info(loggMessage);
         return user;
     }
 
@@ -67,20 +67,4 @@ public class UserServiceImp implements UserService {
         return result;
     }
 
-    public String getBody(HttpServletRequest req) throws IOException {
-        BufferedReader br = req.getReader();
-        String str, result = "";
-        while ((str = br.readLine()) != null) {
-            result += str;
-        }
-        return result;
-    }
-
-    public String toJSON(User user) {
-        return gson.toJson(user);
-    }
-
-    public User fromJson(String bodyRequest) {
-        return gson.fromJson(bodyRequest, User.class);
-    }
 }

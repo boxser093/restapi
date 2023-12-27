@@ -17,82 +17,96 @@
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <javax.servlet>4.0.1</javax.servlet>
+        <tomcat.version>10.1.17</tomcat.version>
         <junit.jupiter.version>5.10.1</junit.jupiter.version>
+        <junit.version>4.13.1</junit.version>
         <mokito.version>1.10.19</mokito.version>
+        <jupiter.version>5.10.0</jupiter.version>
+        <gson.version>2.10.1</gson.version>
         <lombok.version>1.18.30</lombok.version>
+        <mysql.version>8.0.33</mysql.version>
+        <hibernate.version>6.2.7.Final</hibernate.version>
+        <flyway.plagin.version>4.0.3</flyway.plagin.version>
+        <flyway.version>10.2.0</flyway.version>
+        <flyway.core.version>9.21.0</flyway.core.version>
         <flyway.user>root</flyway.user>
         <flyway.password>228228</flyway.password>
         <flyway.url>jdbc:mysql://localhost:3306/restapiapp</flyway.url>
+        <tomcat.plagin.version>2.2</tomcat.plagin.version>
         <apache.commons.fileupload.version>1.5</apache.commons.fileupload.version>
+        <apache.plagin.version>3.4.0</apache.plagin.version>
+        <apache.logging.log4j.version>2.20.0</apache.logging.log4j.version>
+        <apache.logging.log4j.core.version>2.12.4</apache.logging.log4j.core.version>
+        <apache.logging.log4j.slf4j18.version>2.18.0</apache.logging.log4j.slf4j18.version>
     </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-util</artifactId>
-            <version>10.1.17</version>
+            <version>${tomcat.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.20.0</version>
+            <version>${apache.logging.log4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.12.4</version>
+            <version>${apache.logging.log4j.core.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j18-impl</artifactId>
-            <version>2.18.0</version>
+            <version>${apache.logging.log4j.slf4j18.version}</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>6.2.7.Final</version>
+            <version>${hibernate.version}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.30</version>
+            <version>${lombok.version}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <version>5.10.0</version>
+            <version>${jupiter.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
-            <version>1.10.19</version>
+            <version>${mokito.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.33</version>
+            <version>${mysql.version}</version>
         </dependency>
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-mysql</artifactId>
-            <version>10.2.0</version>
+            <version>${flyway.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
-            <version>9.21.0</version>
+            <version>${flyway.core.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13.1</version>
+            <version>${junit.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -104,12 +118,12 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.10.1</version>
+            <version>${gson.version}</version>
         </dependency>
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
-            <version>1.5</version>
+            <version>${apache.commons.fileupload.version}</version>
         </dependency>
     </dependencies>
 
@@ -119,13 +133,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.4.0</version>
+                <version>${apache.plagin.version}</version>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
                 <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <version>${tomcat.plagin.version}</version>
                 <configuration>
                     <path>/</path>
                     <port>8088</port>
@@ -134,7 +148,7 @@
             <plugin>
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
-                <version>4.0.3</version>
+                <version>${flyway.plagin.version}</version>
                 <configuration>
                     <url>${flyway.url}</url>
                     <user>${flyway.user}</user>

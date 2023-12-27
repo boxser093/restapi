@@ -19,15 +19,15 @@
 
     <servlet-mapping>
         <servlet-name>UserRestControllerV1</servlet-name>
-        <url-pattern>/api/v1/users</url-pattern>
+        <url-pattern>/api/v1/users/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>FileServlet</servlet-name>
-        <url-pattern>/api/v1/files</url-pattern>
+        <url-pattern>/api/v1/files/*</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>EventServlet</servlet-name>
-        <url-pattern>/api/v1/events</url-pattern>
+        <url-pattern>/api/v1/events/*</url-pattern>
     </servlet-mapping>
 
 
