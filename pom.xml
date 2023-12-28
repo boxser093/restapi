@@ -42,6 +42,41 @@
 
     <dependencies>
         <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>2.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>2.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-core</artifactId>
+            <version>2.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2</artifactId>
+            <version>2.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2-servlet-initializer-v2-jakarta</artifactId>
+            <version>2.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger.core.v3</groupId>
+            <artifactId>swagger-jaxrs2-jakarta</artifactId>
+            <version>2.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
+        <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-util</artifactId>
             <version>${tomcat.version}</version>
@@ -112,7 +147,7 @@
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
-        <version>${javax.servlet}</version>
+            <version>${javax.servlet}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -124,6 +159,11 @@
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
             <version>${apache.commons.fileupload.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>1.6.6</version>
         </dependency>
     </dependencies>
 
@@ -158,6 +198,43 @@
                         <location>db/migration</location>
                     </locations>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.openapitools.swagger</groupId>
+                <artifactId>swagger-maven-plugin</artifactId>
+                <version>2.1.6</version>
+                <configuration>
+                    <attachSwaggerArtifact>true</attachSwaggerArtifact>
+                    <swaggerConfig>
+                        <servers>
+                            <server>
+                                <url>http://localhost:8080/swagger-ui/</url>
+                                <description>Simple Rest Api</description>
+                            </server>
+                        </servers>
+                        <info>
+                            <title>Thi openapi documentation for rest api app</title>
+                            <version>1.0.0</version>
+                            <termsOfService>Terms</termsOfService>
+                        </info>
+                        <descriptionFile>src/test/resources/descriptions.md</descriptionFile>
+                    </swaggerConfig>
+                    <resourcePackages>
+                        <resourcePackage>io.openapitools.swagger.example</resourcePackage>
+                        <resourcePackage>io.openapitools.swagger.example.alternate</resourcePackage>
+                    </resourcePackages>
+                    <outputDirectory>src/main/resources/api/swaggergoc/</outputDirectory>
+                    <outputFilename>swagger</outputFilename>
+                    <outputFormats>JSON,YAML</outputFormats>
+                    <prettyPrint>true</prettyPrint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

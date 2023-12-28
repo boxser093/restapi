@@ -1,6 +1,5 @@
 package com.ilya.restapiapp.controller;
 
-import com.ilya.restapiapp.dto.EventDto;
 import com.ilya.restapiapp.dto.FileDto;
 import com.ilya.restapiapp.mappers.FIleMapper;
 import com.ilya.restapiapp.model.Event;
@@ -10,9 +9,17 @@ import com.ilya.restapiapp.service.impl.EventServiceImp;
 import com.ilya.restapiapp.service.impl.FileServiceImp;
 import com.ilya.restapiapp.service.impl.UserServiceImp;
 import com.ilya.restapiapp.util.GsonUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
+import io.swagger.v3.oas.annotations.headers.Header;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.extern.slf4j.Slf4j;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,7 +30,7 @@ import java.io.PrintWriter;
 import static com.ilya.restapiapp.util.GsonUtils.*;
 import static com.ilya.restapiapp.util.RequestUtils.*;
 
-
+@Slf4j
 @WebServlet(name = "FileRestControllerV1", urlPatterns = "/api/v1/files**")
 public class FileRestControllerV1 extends HttpServlet {
 //    private Logger logger;
@@ -47,6 +54,29 @@ public class FileRestControllerV1 extends HttpServlet {
         super.destroy();
     }
 
+    @Operation(
+            summary = "Get File By Id",
+            description = "Get File by ID",
+            parameters = {
+                    @Parameter(
+                            in = ParameterIn.PATH,
+                            name = "id",
+                            required = true,
+                            description = "ID of File",
+                            schema = @Schema(
+                                    defaultValue = "1",
+                                    minimum = "1",
+                                    allOf = {String.class}
+                            ),
+                            style = ParameterStyle.SIMPLE
+                    )
+            }
+    )
+
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Запрос успешно выполнен"),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера")
+    })
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
         PrintWriter writer = resp.getWriter();
@@ -55,7 +85,41 @@ public class FileRestControllerV1 extends HttpServlet {
         FileDto fileDto = mapper.map(file);
         writer.print(GsonUtils.toJSON(fileDto));
     }
-
+    @Operation(
+            summary = "Upload New File",
+            description = "Upload a New File",
+            parameters = {
+                    @Parameter(
+                            in = ParameterIn.HEADER,
+                            name = "id",
+                            required = true,
+                            description = "ID User",
+                            schema = @Schema(
+                                    defaultValue = "1",
+                                    minimum = "1",
+                                    allOf = {String.class}
+                            )
+                    ),
+                    @Parameter(
+                            in = ParameterIn.QUERY,
+                            name = "file",
+                            required = true,
+                            description = "File to Upload",
+                            schema = @Schema(
+                                    allOf = {File.class}
+                            )
+                    )
+            }
+    )
+    @RequestBody(
+            description = "We need into a ID user in headers and file int body-params with form-data",
+            required = true,
+            content = @Content(mediaType = "form-data")
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Запрос успешно выполнен"),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера")
+    })
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");
@@ -74,7 +138,20 @@ public class FileRestControllerV1 extends HttpServlet {
         FileDto dto = mapper.map(file);
         writer.print(toJSON(dto));
     }
-
+    @Operation(
+            summary = "Update File",
+            description = "Update name for you upload files"
+    )
+    @RequestBody(
+            description = "Input new File name and id",
+            required = true,
+            content = @Content(mediaType = "application/json",
+                    schema = @Schema(implementation = User.class))
+    )
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Запрос успешно выполнен"),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера")
+    })
     @Override
     protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws  IOException {
         resp.setContentType("application/json");
@@ -84,7 +161,29 @@ public class FileRestControllerV1 extends HttpServlet {
         writer.print(toJSON(fileDto));
 
     }
+    @Operation(
+            summary = "Deleted File By Id",
+            description = "Deleted File by ID",
+            parameters = {
+                    @Parameter(
+                            in = ParameterIn.PATH,
+                            name = "id",
+                            required = true,
+                            description = "ID of File",
+                            schema = @Schema(
+                                    defaultValue = "1",
+                                    minimum = "1",
+                                    allOf = {String.class}
+                            ),
+                            style = ParameterStyle.SIMPLE
+                    )
+            }
+    )
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Запрос успешно выполнен"),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера")
+    })
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("application/json");

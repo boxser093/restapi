@@ -7,6 +7,13 @@ import com.ilya.restapiapp.mappers.UserMapper;
 import com.ilya.restapiapp.model.Event;
 import com.ilya.restapiapp.model.User;
 import com.ilya.restapiapp.service.impl.EventServiceImp;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.enums.ParameterStyle;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -37,7 +44,40 @@ public class EventRestControllerV1 extends HttpServlet {
         eventService = new EventServiceImp();
         eventMapper = new EventMapper();
     }
+    @Operation(
+            summary = "Event Get By Id",
+            description = "Get User by ID",
+            parameters = {
+                    @Parameter(
+                            in = ParameterIn.PATH,
+                            name = "id",
+                            required = true,
+                            description = "ID of Users",
+                            schema = @Schema(
+                                    defaultValue = "1",
+                                    minimum = "1",
+                                    allOf = {String.class}
+                            ),
+                            style = ParameterStyle.SIMPLE
+                    ),
+                    @Parameter(
+                            in = ParameterIn.PATH,
+                            name = "all",
+                            required = true,
+                            description = "If you need all Events, chose 'all' in path query",
+                            schema = @Schema(
+                                    defaultValue = "all",
+                                    minimum = "1",
+                                    allOf = {String.class}
+                            )
+                    )
+            }
+    )
 
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Запрос успешно выполнен"),
+            @ApiResponse(responseCode = "500", description = "Ошибка на стороне сервера")
+    })
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("application/json");
