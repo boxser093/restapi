@@ -35,15 +35,10 @@ public class UserRestControllerV1 extends HttpServlet {
     }
 
     @Override
-    public void init() throws ServletException {
-        super.init();
-        userServiceImp = new UserServiceImp();
-        userMapper = new UserMapper();
-    }
-
-    @Override
     public void init(ServletConfig config) throws ServletException {
         userServiceImp = new UserServiceImp();
+        userServiceImp = new UserServiceImp();
+        userMapper = new UserMapper();
         super.init(config);
     }
     @Operation(
