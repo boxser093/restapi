@@ -1,20 +1,13 @@
 package com.ilya.restapiapp.controller;
 
 import com.ilya.restapiapp.dto.EventDto;
-import com.ilya.restapiapp.dto.UserDto;
 import com.ilya.restapiapp.mappers.EventMapper;
-import com.ilya.restapiapp.mappers.UserMapper;
 import com.ilya.restapiapp.model.Event;
-import com.ilya.restapiapp.model.User;
 import com.ilya.restapiapp.service.impl.EventServiceImp;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.enums.ParameterStyle;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-
+import io.swagger.v3.oas.annotations.*;
+import io.swagger.v3.oas.annotations.enums.*;
+import io.swagger.v3.oas.annotations.media.*;
+import io.swagger.v3.oas.annotations.responses.*;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -28,9 +21,6 @@ import java.util.List;
 import static com.ilya.restapiapp.util.GsonUtils.*;
 @WebServlet(name = "EventRestControllerV1", urlPatterns = "/api/v1/events**")
 public class EventRestControllerV1 extends HttpServlet {
-
-//    private Logger logger = LoggerFactory.getLogger(EventRestControllerV1.class);
-
     private EventServiceImp eventService;
     private EventMapper eventMapper;
     @Override
